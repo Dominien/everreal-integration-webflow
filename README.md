@@ -107,7 +107,12 @@ GET https://your-vercel-deployment.vercel.app/api/cron
 
 ## Troubleshooting
 
-See the [CLAUDE.md](./CLAUDE.md) file for detailed troubleshooting information.
+If you encounter issues:
+
+- Check API token permissions for Webflow
+- Verify FTP connection details
+- Ensure XML files match the expected OpenImmo format
+- Review logs for detailed error information
 
 ## Dependencies
 
