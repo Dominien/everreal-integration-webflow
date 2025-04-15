@@ -32,7 +32,7 @@ This integration creates a seamless, automated connection between the Everreal r
 - **Full Property Data**: All property details from Everreal are available in Webflow
 - **Image Processing**: Property images are processed and imported into Webflow's asset library
 - **DELETE Operation Support**: Handles property deletions automatically
-- **Scheduled Updates**: Runs automatically every 6 hours via Vercel cron jobs
+- **Scheduled Updates**: Runs automatically once daily at 10:00 UTC via Vercel cron jobs
 - **Manual Trigger Support**: Can be triggered on-demand via API endpoint
 
 ## Technical Implementation
@@ -99,7 +99,7 @@ This project includes configuration for automated execution via Vercel:
 2. Add all environment variables in the Vercel dashboard
 3. Deploy the project
 
-The integration will automatically run every 6 hours. You can also trigger it manually by calling:
+The integration will automatically run once daily at 10:00 UTC. You can also trigger it manually by calling:
 
 ```
 GET https://your-vercel-deployment.vercel.app/api/cron
