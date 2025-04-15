@@ -1,0 +1,197 @@
+<?xml version="1.0"?>
+<openimmo>
+  <uebertragung techn_email="listing-integration-immoxmlreport+openimmo_generic+f51c1ee0-16c3-11f0-a69d-1f793792213f@inquiries.everreal.co" art="ONLINE" umfang="TEIL" modus="NEW" version="1.2.7" sendersoftware="EVERREAL" senderversion="1.0" timestamp="2025-04-11T13:13:53.550Z" regi_id="EVRE17"/>
+  <anbieter>
+    <anbieternr>-</anbieternr>
+    <firma>Cube Life GmbH</firma>
+    <openimmo_anid>-</openimmo_anid>
+    <immobilie>
+      <objektkategorie>
+        <nutzungsart WOHNEN="true" GEWERBE="false" ANLAGE="false" WAZ="false"/>
+        <vermarktungsart KAUF="false" MIETE_PACHT="true" ERBPACHT="false" LEASING="false"/>
+        <objektart>
+          <wohnung wohnungtyp="ETAGE"/>
+        </objektart>
+      </objektkategorie>
+      <geo>
+        <plz>40476</plz>
+        <ort>Düsseldorf</ort>
+        <geokoordinaten breitengrad="51.25027" laengengrad="6.7870165"/>
+        <strasse>Merziger Straße</strasse>
+        <hausnummer>19 a/b</hausnummer>
+        <land iso_land="DEU"/>
+        <etage>5</etage>
+      </geo>
+      <kontaktperson>
+        <email_zentrale>z+openimmo_generic+cube-life@inquiries.everreal.co</email_zentrale>
+        <email_direkt>z+openimmo_generic+cube-life@inquiries.everreal.co</email_direkt>
+        <name>El Ghrayeb</name>
+        <vorname>Zeynab</vorname>
+        <firma>Cube Life GmbH</firma>
+        <email_privat>z+openimmo_generic+cube-life@inquiries.everreal.co</email_privat>
+        <email_feedback>z+openimmo_generic+cube-life@inquiries.everreal.co</email_feedback>
+      </kontaktperson>
+      <preise>
+        <kaltmiete>620</kaltmiete>
+        <warmmiete>775</warmmiete>
+        <nebenkosten>155</nebenkosten>
+        <heizkosten_enthalten>true</heizkosten_enthalten>
+        <provisionspflichtig>false</provisionspflichtig>
+        <waehrung iso_waehrung="EUR"/>
+        <kaution>1860</kaution>
+      </preise>
+      <flaechen>
+        <wohnflaeche>21.19</wohnflaeche>
+        <gesamtflaeche>21.19</gesamtflaeche>
+        <anzahl_zimmer>1</anzahl_zimmer>
+        <anzahl_schlafzimmer>1</anzahl_schlafzimmer>
+        <anzahl_badezimmer>1</anzahl_badezimmer>
+        <anzahl_balkone>1</anzahl_balkone>
+      </flaechen>
+      <ausstattung>
+        <ausstatt_kategorie>STANDARD</ausstatt_kategorie>
+        <kueche EBK="true"/>
+        <heizungsart OFEN="false" ETAGE="false" ZENTRAL="false" FERN="false" FUSSBODEN="false"/>
+        <befeuerung OEL="false" GAS="false" ELEKTRO="false" ALTERNATIV="false" SOLAR="false" ERDWAERME="false" LUFTWP="false" FERN="false" BLOCK="false" WASSER-ELEKTRO="false" PELLET="false"/>
+        <fahrstuhl PERSONEN="true" LASTEN="false"/>
+        <barrierefrei>true</barrierefrei>
+        <unterkellert keller="JA"/>
+      </ausstattung>
+      <zustand_angaben>
+        <baujahr>2018</baujahr>
+        <letztemodernisierung/>
+        <zustand zustand_art="GEPFLEGT"/>
+        <energiepass>
+          <epart>BEDARF</epart>
+          <endenergiebedarf>39</endenergiebedarf>
+          <primaerenergietraeger>Fernwärme</primaerenergietraeger>
+          <wertklasse>A</wertklasse>
+          <jahrgang>2014</jahrgang>
+        </energiepass>
+      </zustand_angaben>
+      <freitexte>
+        <objekttitel>Exklusives Business-Apartment im Herzen von Düsseldorf Derendorf - Top Lage mit Balkon!</objekttitel>
+        <lage>Zentral, Dynamisch, Aufregend!
+
+Neben einigen anderen wundervollen Stadtteilen in Düsseldorf spielt auch in Derendorf das Leben - in angesagten Cafés, coolen Bars und Restaurants, aber auch in Boutiquen und Galerien. Supermärkte für den täglichen Bedarf befinden sich in unmittelbarer Nähe. Die nächste U-Bahn-Haltestelle "Merziger Straße" ist direkt vor der Tür. Der Campus Derendorf der Hochschule Düsseldorf ist in wenigen Minuten fußläufig erreichbar. Sportbegeisterte Bewohner können sich in den zahlreichen Fitnessstudios in der Umgebung auspowern. Szenige Locations, wie beispielsweise die Rheinterrassen, die Düsseldorfer Altstadt sowie die Shopping- und Flaniermeile "Königsallee" sind sowohl zu Fuß als auch mit dem ÖPNV sehr gut zu erreichen.</lage>
+        <ausstatt_beschr>Entdecke unsere exklusiven Apartments, die bereits mit erstklassigen Möbeln ausgestattet sind – eine perfekte Mischung für jeden Geschmack. Wir bieten zwei herausragende Ausstattungslinien an:
+
+BE SMART : LIVE CUBE
+
+Deine Vorteile auf einen Blick:
+Modern eingerichtete Apartments für Studierende und junge Berufstätige sowie eine besondere Kombination aus hochwertigem Wohnen und einer spannenden, internationalen Community. Du triffst auf neue Menschen und beginnst mit fantastischen Momenten in Deiner neuen Stadt.
+
+- Möblierte Apartments für Wohngemeinschaften
+- Barrierefreie Apartments
+- Nebenkosten inklusive
+- Hausmeisterservice
+- Internetanschluss
+- Waschmaschinen- und Trockner (gegen Gebühr)
+- PKW- und Fahrradstellplätze
+- Optimale Anbindung an den ÖPNV
+
+Ausstattung: 
+Bett, Kleiderschrank, Schreibtisch, Drehstuhl und Stuhl, Hängeregal, Küche mit 
+Schränken, Kühlschrank mit 3-Sterne-Gefrierfach, Ceranfeld (2 Platten), Spüle, Mikrowelle, Mülleimer, Bad mit Dusche, WC und Waschbecken, Gardinen (Verdunklung), Raffstore (hofseitig), Spülmaschine, Umluft-Dunstabzugshaube, Boxspringbett
+
+
+</ausstatt_beschr>
+        <objektbeschreibung>Nah an allem, weit entfernt von Langeweile!
+
+Unsere Apartmentanlage bietet die perfekte Unterkunft für alle Neuankömmlinge in Düsseldorf, die nach dem ultimativen City-Leben suchen. Das moderne Gebäude verfügt über 111 möblierte Apartments, die sich auf fünf Obergeschosse und ein Staffelgeschoss verteilen.</objektbeschreibung>
+        <sonstige_angaben>Stichworte
+TV: Kabelanschluss, Sat-Anschluss
+Serviceleistungen: Hausmeister
+Sonstiges: frei werdend
+
+Wir stehen Dir für alle Fragen zu unseren Apartments zur Verfügung und halten alle Informationen zu einem Mietvertrag für Dich bereit. 
+
+Für Informationen rund um das Thema Apartments sind wir für Dich telefonisch von montags bis freitags unter + 49 2171 – 77 999 55 und per Mail unter vermietung@cube.life erreichbar. 
+
+Wir freuen uns auf Dich!</sonstige_angaben>
+      </freitexte>
+      <anhaenge>
+        <anhang location="REMOTE" gruppe="TITELBILD">
+          <anhangtitel>Business.Line-Apartment</anhangtitel>
+          <format>image/jpeg</format>
+          <daten>
+            <pfad>https://s3.eu-central-1.amazonaws.com/everreal-uploads-production/cube-life/519c5213-8d04-48af-a765-dd7068212892/listing/fb678b44-10f6-4a53-bce7-24341a220929/images/c2996d06-1738-44be-b649-dd34f3c6cd1f.jpg</pfad>
+          </daten>
+        </anhang>
+        <anhang location="REMOTE" gruppe="BILD">
+          <anhangtitel>Arbeitsbereich</anhangtitel>
+          <format>image/jpeg</format>
+          <daten>
+            <pfad>https://s3.eu-central-1.amazonaws.com/everreal-uploads-production/cube-life/519c5213-8d04-48af-a765-dd7068212892/listing/fb678b44-10f6-4a53-bce7-24341a220929/images/288695cd-9cbf-45f6-8a90-5fd1f351753a.jpg</pfad>
+          </daten>
+        </anhang>
+        <anhang location="REMOTE" gruppe="BILD">
+          <anhangtitel>Schlafbereich</anhangtitel>
+          <format>image/jpeg</format>
+          <daten>
+            <pfad>https://s3.eu-central-1.amazonaws.com/everreal-uploads-production/cube-life/519c5213-8d04-48af-a765-dd7068212892/listing/fb678b44-10f6-4a53-bce7-24341a220929/images/45416850-ee01-44ff-a7c0-f51a3230444a.jpg</pfad>
+          </daten>
+        </anhang>
+        <anhang location="REMOTE" gruppe="BILD">
+          <anhangtitel>Küche mit Ceranfeld und Spülmaschine</anhangtitel>
+          <format>image/jpeg</format>
+          <daten>
+            <pfad>https://s3.eu-central-1.amazonaws.com/everreal-uploads-production/cube-life/519c5213-8d04-48af-a765-dd7068212892/listing/fb678b44-10f6-4a53-bce7-24341a220929/images/2464836b-fb2d-42ba-8bee-cca3a6331367.jpg</pfad>
+          </daten>
+        </anhang>
+        <anhang location="REMOTE" gruppe="BILD">
+          <anhangtitel>Badezimmer 1</anhangtitel>
+          <format>image/jpeg</format>
+          <daten>
+            <pfad>https://s3.eu-central-1.amazonaws.com/everreal-uploads-production/cube-life/519c5213-8d04-48af-a765-dd7068212892/listing/fb678b44-10f6-4a53-bce7-24341a220929/images/c6cc3938-e41c-4807-a110-bbcdb2bdc9ce.jpg</pfad>
+          </daten>
+        </anhang>
+        <anhang location="REMOTE" gruppe="BILD">
+          <anhangtitel>Badezimmer 2</anhangtitel>
+          <format>image/jpeg</format>
+          <daten>
+            <pfad>https://s3.eu-central-1.amazonaws.com/everreal-uploads-production/cube-life/519c5213-8d04-48af-a765-dd7068212892/listing/fb678b44-10f6-4a53-bce7-24341a220929/images/d23d8dd9-5aa7-4a91-ad14-e0cd549a6dae.jpg</pfad>
+          </daten>
+        </anhang>
+        <anhang location="REMOTE" gruppe="BILD">
+          <anhangtitel>Badezimmer 3</anhangtitel>
+          <format>image/jpeg</format>
+          <daten>
+            <pfad>https://s3.eu-central-1.amazonaws.com/everreal-uploads-production/cube-life/519c5213-8d04-48af-a765-dd7068212892/listing/fb678b44-10f6-4a53-bce7-24341a220929/images/5d35f14d-cc00-42f0-b600-ab2a9b5f5918.jpg</pfad>
+          </daten>
+        </anhang>
+        <anhang location="REMOTE" gruppe="BILD">
+          <anhangtitel>Außenansicht Objekt</anhangtitel>
+          <format>image/jpeg</format>
+          <daten>
+            <pfad>https://s3.eu-central-1.amazonaws.com/everreal-uploads-production/cube-life/519c5213-8d04-48af-a765-dd7068212892/listing/fb678b44-10f6-4a53-bce7-24341a220929/images/1f8a8d47-6da1-4141-b489-ab002ae266dd.jpg</pfad>
+          </daten>
+        </anhang>
+        <anhang location="REMOTE" gruppe="BILD">
+          <anhangtitel>2024_Cube Life GmbH_Interessentenbogen - Merziger Str. 19 40476 Düsseldorf.pdf</anhangtitel>
+          <format>application/pdf</format>
+          <daten>
+            <pfad>https://s3.eu-central-1.amazonaws.com/everreal-uploads-production/cube-life/519c5213-8d04-48af-a765-dd7068212892/listing/e6bf2e4b-7f1b-4ef4-b4df-5b86ad57dbdf/documents/8d4b0211-a80b-4679-8f62-1ed62ba9b49f.pdf</pfad>
+          </daten>
+        </anhang>
+      </anhaenge>
+      <verwaltung_objekt>
+        <objektadresse_freigeben>true</objektadresse_freigeben>
+        <verfuegbar_ab>2025-07-01</verfuegbar_ab>
+        <wbs_sozialwohnung>false</wbs_sozialwohnung>
+        <vermietet>false</vermietet>
+        <haustiere>false</haustiere>
+      </verwaltung_objekt>
+      <verwaltung_techn>
+        <objektnr_intern>34c8c8f9-897e-45b4-8422-ec1cd8589d6e</objektnr_intern>
+        <objektnr_extern>137034</objektnr_extern>
+        <aktion aktionart="CHANGE"/>
+        <aktiv_von>2025-04-10</aktiv_von>
+        <aktiv_bis>2026-04-11</aktiv_bis>
+        <openimmo_obid>137034</openimmo_obid>
+        <stand_vom>2025-04-10</stand_vom>
+        <weitergabe_generell>true</weitergabe_generell>
+      </verwaltung_techn>
+    </immobilie>
+  </anbieter>
+</openimmo>

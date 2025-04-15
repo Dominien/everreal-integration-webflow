@@ -1,0 +1,29 @@
+{
+  "name": "everreal-integration-webflow",
+  "version": "1.0.0",
+  "description": "Node.js implementation of OpenImmo XML to Webflow CMS integration",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node index.js --test ./test_data/sample.xml",
+    "debug": "node --inspect index.js"
+  },
+  "keywords": [
+    "webflow",
+    "openimmo",
+    "ftp",
+    "xml",
+    "cms"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.8.4",
+    "basic-ftp": "^5.0.3",
+    "dotenv": "^16.3.1",
+    "fs-extra": "^11.1.1",
+    "webflow-api": "^3.1.1",
+    "winston": "^3.11.0",
+    "xml2js": "^0.6.2"
+  }
+}

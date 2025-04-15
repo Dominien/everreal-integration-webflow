@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<openimmo>
+  <uebertragung techn_email="listing-integration-immoxmlreport+openimmo_generic+f51c1ee0-16c3-11f0-a69d-1f793792213f@inquiries.everreal.co" art="ONLINE" umfang="TEIL" modus="NEW" version="1.2.7" sendersoftware="EVERREAL" senderversion="1.0" timestamp="2025-04-11T11:03:46.913Z" regi_id="EVRE17"/>
+  <anbieter>
+    <anbieternr>-</anbieternr>
+    <firma>Cube Life GmbH</firma>
+    <openimmo_anid>-</openimmo_anid>
+    <immobilie>
+      <objektkategorie>
+        <nutzungsart WOHNEN="true" GEWERBE="false" ANLAGE="false" WAZ="false"/>
+        <vermarktungsart KAUF="false" MIETE_PACHT="true" ERBPACHT="false" LEASING="false"/>
+        <objektart>
+          <wohnung wohnungtyp="ETAGE"/>
+        </objektart>
+      </objektkategorie>
+      <geo>
+        <plz>40476</plz>
+        <ort>Düsseldorf</ort>
+        <geokoordinaten breitengrad="51.25027" laengengrad="6.7870165"/>
+        <strasse>Merziger Straße</strasse>
+        <hausnummer>19 a/b</hausnummer>
+        <land iso_land="DEU"/>
+        <etage>5</etage>
+      </geo>
+      <kontaktperson>
+        <email_zentrale>z+openimmo_generic+cube-life@inquiries.everreal.co</email_zentrale>
+        <email_direkt>z+openimmo_generic+cube-life@inquiries.everreal.co</email_direkt>
+        <n>El Ghrayeb</n>
+        <vorname>Zeynab</vorname>
+        <firma>Cube Life GmbH</firma>
+        <email_privat>z+openimmo_generic+cube-life@inquiries.everreal.co</email_privat>
+        <email_feedback>z+openimmo_generic+cube-life@inquiries.everreal.co</email_feedback>
+      </kontaktperson>
+      <preise>
+        <kaltmiete>620</kaltmiete>
+        <warmmiete>775</warmmiete>
+        <nebenkosten>155</nebenkosten>
+        <heizkosten_enthalten>true</heizkosten_enthalten>
+        <provisionspflichtig>false</provisionspflichtig>
+        <waehrung iso_waehrung="EUR"/>
+        <kaution>1860</kaution>
+      </preise>
+      <flaechen>
+        <wohnflaeche>21.19</wohnflaeche>
+        <gesamtflaeche>21.19</gesamtflaeche>
+        <anzahl_zimmer>1</anzahl_zimmer>
+        <anzahl_schlafzimmer>1</anzahl_schlafzimmer>
+        <anzahl_badezimmer>1</anzahl_badezimmer>
+        <anzahl_balkone>1</anzahl_balkone>
+      </flaechen>
+      <ausstattung>
+        <ausstatt_kategorie>STANDARD</ausstatt_kategorie>
+        <kueche EBK="true"/>
+        <heizungsart OFEN="false" ETAGE="false" ZENTRAL="false" FERN="false" FUSSBODEN="false"/>
+        <befeuerung OEL="false" GAS="false" ELEKTRO="false" ALTERNATIV="false" SOLAR="false" ERDWAERME="false" LUFTWP="false" FERN="false" BLOCK="false" WASSER-ELEKTRO="false" PELLET="false"/>
+        <fahrstuhl PERSONEN="true" LASTEN="false"/>
+        <barrierefrei>true</barrierefrei>
+        <unterkellert keller="JA"/>
+      </ausstattung>
+      <zustand_angaben>
+        <baujahr>2018</baujahr>
+        <letztemodernisierung/>
+        <zustand zustand_art="GEPFLEGT"/>
+        <energiepass>
+          <epart>BEDARF</epart>
+          <endenergiebedarf>39</endenergiebedarf>
+          <primaerenergietraeger>Fernwärme</primaerenergietraeger>
+          <wertklasse>A</wertklasse>
+          <jahrgang>2014</jahrgang>
+        </energiepass>
+      </zustand_angaben>
+      <freitexte>
+        <objekttitel>Exklusives Business-Apartment im Herzen von Düsseldorf Derendorf - Top Lage mit Balkon!</objekttitel>
+        <lage>Zentral, Dynamisch, Aufregend!</lage>
+        <ausstatt_beschr>Entdecke unsere exklusiven Apartments, die bereits mit erstklassigen Möbeln ausgestattet sind</ausstatt_beschr>
+        <objektbeschreibung>Nah an allem, weit entfernt von Langeweile!</objektbeschreibung>
+        <sonstige_angaben>Stichworte TV: Kabelanschluss, Sat-Anschluss</sonstige_angaben>
+      </freitexte>
+      <anhaenge>
+        <anhang location="REMOTE" gruppe="TITELBILD">
+          <anhangtitel>Business.Line-Apartment</anhangtitel>
+          <format>image/jpeg</format>
+          <daten>
+            <pfad>https://s3.eu-central-1.amazonaws.com/everreal-uploads-production/cube-life/519c5213-8d04-48af-a765-dd7068212892/listing/fb678b44-10f6-4a53-bce7-24341a220929/images/c2996d06-1738-44be-b649-dd34f3c6cd1f.jpg</pfad>
+          </daten>
+        </anhang>
+      </anhaenge>
+      <verwaltung_objekt>
+        <objektadresse_freigeben>true</objektadresse_freigeben>
+        <verfuegbar_ab>2025-07-01</verfuegbar_ab>
+        <wbs_sozialwohnung>false</wbs_sozialwohnung>
+        <vermietet>false</vermietet>
+        <haustiere>false</haustiere>
+      </verwaltung_objekt>
+      <verwaltung_techn>
+        <objektnr_intern>34c8c8f9-897e-45b4-8422-ec1cd8589d6e</objektnr_intern>
+        <objektnr_extern>137034</objektnr_extern>
+        <aktion aktionart="DELETE"/>
+        <aktiv_von>2025-04-10</aktiv_von>
+        <aktiv_bis>2026-04-11</aktiv_bis>
+        <openimmo_obid>137034</openimmo_obid>
+        <stand_vom>2025-04-10</stand_vom>
+        <weitergabe_generell>true</weitergabe_generell>
+      </verwaltung_techn>
+    </immobilie>
+  </anbieter>
+</openimmo>
