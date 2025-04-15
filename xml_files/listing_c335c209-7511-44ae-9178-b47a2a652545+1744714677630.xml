@@ -1,0 +1,159 @@
+<?xml version="1.0"?>
+<openimmo>
+  <uebertragung techn_email="listing-integration-immoxmlreport+openimmo_generic+7d71c340-19e8-11f0-a051-d7048aa458e7@inquiries.everreal.co" art="ONLINE" umfang="TEIL" modus="NEW" version="1.2.7" sendersoftware="EVERREAL" senderversion="1.0" timestamp="2025-04-15T10:57:57.629Z" regi_id="EVRE17"/>
+  <anbieter>
+    <anbieternr>-</anbieternr>
+    <firma>Cube Life GmbH</firma>
+    <openimmo_anid>-</openimmo_anid>
+    <immobilie>
+      <objektkategorie>
+        <nutzungsart WOHNEN="true" GEWERBE="false" ANLAGE="false" WAZ="false"/>
+        <vermarktungsart KAUF="false" MIETE_PACHT="true" ERBPACHT="false" LEASING="false"/>
+        <objektart>
+          <wohnung wohnungtyp="ETAGE"/>
+        </objektart>
+      </objektkategorie>
+      <geo>
+        <plz>30165</plz>
+        <ort>Hannover</ort>
+        <geokoordinaten breitengrad="52.4044677" laengengrad="9.7140384"/>
+        <strasse>Voltmerstraße</strasse>
+        <hausnummer>71c</hausnummer>
+        <land iso_land="DEU"/>
+        <etage>1</etage>
+        <anzahl_etagen>4</anzahl_etagen>
+      </geo>
+      <kontaktperson>
+        <email_zentrale>z+openimmo_generic+cube-life@inquiries.everreal.co</email_zentrale>
+        <email_direkt>z+openimmo_generic+cube-life@inquiries.everreal.co</email_direkt>
+        <name>El Ghrayeb</name>
+        <vorname>Zeynab</vorname>
+        <firma>Cube Life GmbH</firma>
+        <email_privat>z+openimmo_generic+cube-life@inquiries.everreal.co</email_privat>
+        <email_feedback>z+openimmo_generic+cube-life@inquiries.everreal.co</email_feedback>
+      </kontaktperson>
+      <preise>
+        <kaltmiete>620</kaltmiete>
+        <warmmiete>790</warmmiete>
+        <nebenkosten>170</nebenkosten>
+        <heizkosten_enthalten>true</heizkosten_enthalten>
+        <heizkosten>0</heizkosten>
+        <waehrung iso_waehrung="EUR"/>
+        <kaution>1860</kaution>
+      </preise>
+      <flaechen>
+        <wohnflaeche>55.65</wohnflaeche>
+        <gesamtflaeche>55.65</gesamtflaeche>
+        <anzahl_zimmer>2</anzahl_zimmer>
+        <anzahl_schlafzimmer>1</anzahl_schlafzimmer>
+        <anzahl_badezimmer>1</anzahl_badezimmer>
+        <anzahl_balkone>1</anzahl_balkone>
+      </flaechen>
+      <ausstattung>
+        <ausstatt_kategorie>STANDARD</ausstatt_kategorie>
+        <heizungsart OFEN="false" ETAGE="false" ZENTRAL="false" FERN="false" FUSSBODEN="false"/>
+        <befeuerung OEL="false" GAS="false" ELEKTRO="false" ALTERNATIV="false" SOLAR="false" ERDWAERME="false" LUFTWP="false" FERN="false" BLOCK="false" WASSER-ELEKTRO="false" PELLET="false"/>
+        <fahrstuhl PERSONEN="true" LASTEN="false"/>
+        <barrierefrei>true</barrierefrei>
+      </ausstattung>
+      <zustand_angaben>
+        <baujahr>2018</baujahr>
+        <letztemodernisierung/>
+        <zustand zustand_art="GEPFLEGT"/>
+        <energiepass>
+          <epart>BEDARF</epart>
+          <endenergiebedarf>46</endenergiebedarf>
+          <primaerenergietraeger>Fernwärme</primaerenergietraeger>
+          <wertklasse>A</wertklasse>
+          <jahrgang>2014</jahrgang>
+        </energiepass>
+      </zustand_angaben>
+      <freitexte>
+        <objekttitel>Gemütliches Seniorenbetreutes Wohnen ab 50 Jahren in Hannover </objekttitel>
+        <lage>Supermärkte für den täglichen Bedarf befinden sich in unmittelbarer Nähe. Die nächste Haltestelle `Hainhölzer Markt` ist direkter Umgebung.</lage>
+        <objektbeschreibung>*Seniorenbetreutes Wohnen ab 50 Jahren* – die insgesamt 27 Wohnungen für ein oder zwei Personen sind barrierefrei ausgestattet, verfügen über großzügige Wohn-Küchen-Essbereiche, Schlafzimmer, Loggia oder Dachterrasse, sowie moderne, geräumige Bäder (teilweise mit Fenster) mit ebenerdigen Glasduschen, WC und Waschtisch.
+
+Der sehr schöne Gemeinschaftsraum im Erdgeschoss der Hauses, mit voll ausgestatteter Küche sowie angrenzendem Terrassen- und Gartenbereich runden das Angebot in diesem Haus ab. Sollten Sie also Familie und Freunde zu Besuch haben, laden die Räumlichkeiten zum Verweilen ein!
+
+Diese ist im Objekt ansässig und bietet neben den Grundleistungen (Fragen rund um das tägliche Leben, Hilfestellungen, Beratung, Gruppenangebote, Dienstleistungen wie z. B. Hausnotruf etc.), die in der monatlichen Pauschale des Service- u. Betreuungsvertrages enthalten sind.
+
+Raumaufteilung
+Die Wohnung ist in zwei Räume aufgeteilt (siehe Grundriss).
+Der größte Raum umfasst die offene Küche mit Wohn- und Essbereich und geht in den Flur über.
+Vom Wohn-Essbereich haben Sie direkten Zugang zur Loggia.
+Das Schlafzimmer, das innenliegende Badezimmer (ohne Fenster) mit ebenerdiger Dusche, sowie der Abstellraum gehen vom Flur aus weg.
+Der Abstellraum mit Waschmaschinenanschluss bietet Lagerfläche.
+Ein Kellerraum ist nicht vorhanden!</objektbeschreibung>
+        <sonstige_angaben>Besichtigungen sind nach vorheriger Absprache möglich.
+
+Für Informationen rund um das Thema seniorenbetreutes Wohnen sind wir für Sie telefonisch von montags bis freitags unter + 49 2171 – 77 999 55 erreichbar.
+
+
+Stichworte
+Sonstiges/Wohnen: seniorengerechtes Wohnen
+Sonstiges: frei werdend</sonstige_angaben>
+      </freitexte>
+      <anhaenge>
+        <anhang location="REMOTE" gruppe="TITELBILD">
+          <anhangtitel>Wohn- und Essbereich</anhangtitel>
+          <format>image/jpeg</format>
+          <daten>
+            <pfad>https://s3.eu-central-1.amazonaws.com/everreal-uploads-production/cube-life/519c5213-8d04-48af-a765-dd7068212892/listing/74f9665f-a235-43cd-a9c0-ebb1771efc17/images/8d88e2ae-45c0-4747-9fcb-59977fbb50ac.jpg</pfad>
+          </daten>
+        </anhang>
+        <anhang location="REMOTE" gruppe="BILD">
+          <anhangtitel>Flurbereich</anhangtitel>
+          <format>image/jpeg</format>
+          <daten>
+            <pfad>https://s3.eu-central-1.amazonaws.com/everreal-uploads-production/cube-life/519c5213-8d04-48af-a765-dd7068212892/listing/74f9665f-a235-43cd-a9c0-ebb1771efc17/images/acad9c27-e221-4040-a2dc-cd8fcfd7bec1.jpg</pfad>
+          </daten>
+        </anhang>
+        <anhang location="REMOTE" gruppe="BILD">
+          <anhangtitel>Schlafzimmer</anhangtitel>
+          <format>image/jpeg</format>
+          <daten>
+            <pfad>https://s3.eu-central-1.amazonaws.com/everreal-uploads-production/cube-life/519c5213-8d04-48af-a765-dd7068212892/listing/74f9665f-a235-43cd-a9c0-ebb1771efc17/images/2c3839a2-aee6-4e4e-a4cf-c74685e4ef9e.jpg</pfad>
+          </daten>
+        </anhang>
+        <anhang location="REMOTE" gruppe="BILD">
+          <anhangtitel>Badezimmer</anhangtitel>
+          <format>image/jpeg</format>
+          <daten>
+            <pfad>https://s3.eu-central-1.amazonaws.com/everreal-uploads-production/cube-life/519c5213-8d04-48af-a765-dd7068212892/listing/74f9665f-a235-43cd-a9c0-ebb1771efc17/images/85f61e88-1a32-415c-b99d-60a53b3ba6e6.jpg</pfad>
+          </daten>
+        </anhang>
+        <anhang location="REMOTE" gruppe="BILD">
+          <anhangtitel>2024CL_VOLT_Mieterselbstauskunft.pdf</anhangtitel>
+          <format>application/pdf</format>
+          <daten>
+            <pfad>https://s3.eu-central-1.amazonaws.com/everreal-uploads-production/cube-life/519c5213-8d04-48af-a765-dd7068212892/listing/74f9665f-a235-43cd-a9c0-ebb1771efc17/documents/117df669-1f2f-4853-8d6a-ddc5674ec74a.pdf</pfad>
+          </daten>
+        </anhang>
+        <anhang location="REMOTE" gruppe="BILD">
+          <anhangtitel>Grundriss WE20</anhangtitel>
+          <format>image/jpeg</format>
+          <daten>
+            <pfad>https://s3.eu-central-1.amazonaws.com/everreal-uploads-production/cube-life/519c5213-8d04-48af-a765-dd7068212892/listing/74f9665f-a235-43cd-a9c0-ebb1771efc17/floorplans/dadd4b7c-7434-4961-9250-158578880d69.jpg</pfad>
+          </daten>
+        </anhang>
+      </anhaenge>
+      <verwaltung_objekt>
+        <objektadresse_freigeben>true</objektadresse_freigeben>
+        <verfuegbar_ab>2025-07-01</verfuegbar_ab>
+        <wbs_sozialwohnung>false</wbs_sozialwohnung>
+        <vermietet>false</vermietet>
+        <haustiere>false</haustiere>
+      </verwaltung_objekt>
+      <verwaltung_techn>
+        <objektnr_intern>c335c209-7511-44ae-9178-b47a2a652545</objektnr_intern>
+        <objektnr_extern>137311</objektnr_extern>
+        <aktion aktionart="CHANGE"/>
+        <aktiv_von>2025-04-14</aktiv_von>
+        <aktiv_bis>2026-04-15</aktiv_bis>
+        <openimmo_obid>137311</openimmo_obid>
+        <stand_vom>2025-04-10</stand_vom>
+        <weitergabe_generell>true</weitergabe_generell>
+      </verwaltung_techn>
+    </immobilie>
+  </anbieter>
+</openimmo>
