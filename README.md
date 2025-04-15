@@ -1,18 +1,56 @@
-# Everreal Integration Webflow
+# Everreal-Webflow Real Estate Integration
 
-This project integrates OpenImmo XML property listings with a Webflow CMS collection. It handles downloading XML files from an FTP server, parsing the property data, and importing it into Webflow.
+An automated solution for keeping real estate listings synchronized between Everreal platform and Webflow CMS.
 
-## Features
+## What This Does
 
-- Connect to FTP server to retrieve XML files
-- Parse OpenImmo XML format to extract property information
-- Import properties into a Webflow CMS collection
-- Handle property deletions when specified in the XML
-- Process images for property listings
-- Publish the Webflow site to make changes live
-- Automated scheduled execution via Vercel cron jobs
+This integration creates a seamless, automated connection between the Everreal real estate platform and Webflow:
 
-## Installation
+1. **Continuous Synchronization**: Property listings from Everreal are automatically synced to your Webflow CMS in real-time
+2. **Bi-directional Updates**: Changes made in Everreal instantly reflect on your Webflow site
+3. **Complete Automation**: No manual data entry required - listings, updates, and deletions are all handled automatically
+
+## How It Works
+
+1. The integration connects to Everreal's FTP server to retrieve OpenImmo XML property listing files
+2. Each XML file is downloaded, parsed, and processed to extract all property details:
+   - Property specifications (size, rooms, price, etc.)
+   - Location details
+   - Images and media content
+   - Availability status
+   - Marketing information
+   
+3. For each property:
+   - New listings are added to Webflow
+   - Updated listings are refreshed in Webflow
+   - Deleted listings are automatically removed from Webflow
+   
+4. The Webflow site is published, making all changes live immediately
+
+## Key Features
+
+- **Full Property Data**: All property details from Everreal are available in Webflow
+- **Image Processing**: Property images are processed and imported into Webflow's asset library
+- **DELETE Operation Support**: Handles property deletions automatically
+- **Scheduled Updates**: Runs automatically every 6 hours via Vercel cron jobs
+- **Manual Trigger Support**: Can be triggered on-demand via API endpoint
+
+## Technical Implementation
+
+- Built on Node.js with a robust error handling system
+- Uses OpenImmo XML standard for property data exchange
+- Leverages Webflow's CMS and API for content management
+- Deployed as a serverless function on Vercel with scheduled execution
+
+## Setup & Configuration
+
+### Requirements
+
+- Everreal account with FTP access
+- Webflow site with CMS collection configured for properties
+- Vercel account (for deployment and scheduling)
+
+### Installation
 
 ```bash
 # Clone the repository
@@ -23,9 +61,9 @@ cd everreal-integration-webflow
 npm install
 ```
 
-## Configuration
+### Configuration
 
-Create a `.env` file with the following configuration:
+Create a `.env` file with the following:
 
 ```
 # Webflow API Credentials
@@ -33,7 +71,7 @@ WEBFLOW_TOKEN=your_webflow_api_token
 COLLECTION_ID=your_webflow_collection_id
 SITE_ID=your_webflow_site_id
 
-# FTP Server Credentials
+# FTP Server Credentials (Everreal)
 FTP_HOST=your_ftp_host
 FTP_USER=your_ftp_username
 FTP_PASSWORD=your_ftp_password
@@ -41,68 +79,41 @@ FTP_PORT=21
 REMOTE_FOLDER=/
 ```
 
-**Important**: Make sure your Webflow API token has CMS API Read/Write permissions for the collection, otherwise item operations will fail.
+**Important**: Your Webflow API token needs CMS API Read/Write permissions.
 
 ## Usage
 
 ```bash
-# Run the integration script
+# Run the integration manually
 npm start
 
-# Test with a local XML file
+# Test with a sample XML file
 npm test
 ```
 
-The script will:
-1. Connect to the FTP server
-2. Download and parse XML files
-3. Import property listings to Webflow
-4. Handle DELETE operations for properties
-5. Publish the site to make changes live
+## Vercel Deployment & Scheduling
 
-## Vercel Deployment with Cron Job
-
-This project is configured to run as a scheduled cron job on Vercel.
-
-### Setup
+This project includes configuration for automated execution via Vercel:
 
 1. Connect your repository to Vercel
 2. Add all environment variables in the Vercel dashboard
 3. Deploy the project
 
-The cron job will automatically run every 6 hours due to the configuration in `vercel.json`.
-
-### Manual Trigger
-
-You can also trigger the import manually by calling the API endpoint:
+The integration will automatically run every 6 hours. You can also trigger it manually by calling:
 
 ```
 GET https://your-vercel-deployment.vercel.app/api/cron
 ```
 
-## XML Support
-
-This integration supports OpenImmo XML format with the following features:
-
-- Property details extraction (all common fields)
-- Image field processing (up to 5 property images)
-- DELETE flag detection (in both root and verwaltung_techn elements)
-
 ## Troubleshooting
 
-If you encounter 400 errors when trying to access Webflow items, check your API token permissions:
-
-1. Generate a new token with CMS API access
-2. Enable Read/Write permissions for your specific collection
-3. Update your .env file with the new token
-
-The script implements multiple fallback methods to ensure compatibility with different API versions and token permission levels.
+See the [CLAUDE.md](./CLAUDE.md) file for detailed troubleshooting information.
 
 ## Dependencies
 
-- axios - For direct API calls
-- basic-ftp - For FTP operations
-- dotenv - For environment variables
+- axios - API calls
+- basic-ftp - FTP operations
+- dotenv - Environment variables
 - fs-extra - File system utilities
 - xml2js - XML parsing
 - webflow-api - Webflow API client
