@@ -25,6 +25,9 @@ const logger = winston.createLogger({
 // Load environment variables
 require('dotenv').config();
 
+// XML Parser (reuse instance for performance)
+const xmlParser = new xml2js.Parser({ explicitArray: true });
+
 // ---------------------------
 // FTP Server Credentials
 // ---------------------------
@@ -1114,28 +1117,58 @@ async function main() {
     }
   }
   
-  const xmlFiles = await listXmlFiles();
-  if (!xmlFiles.length) {
-    logger.error("No XML files found. Exiting.");
+  // ---------------------------
+  // FTP fetch & XML parse (single session)
+  // ---------------------------
+  const ftpClient = new ftp.Client();
+  ftpClient.ftp.verbose = false;
+  let xmlFiles;
+  try {
+    await ftpClient.access({ host: FTP_HOST, port: FTP_PORT, user: FTP_USER, password: FTP_PASSWORD, secure: false });
+    await ftpClient.cd(REMOTE_FOLDER);
+    const list = await ftpClient.list();
+    xmlFiles = list
+      .filter(f => f.name.toLowerCase().endsWith('.xml'))
+      .map(f => f.name);
+  } catch (err) {
+    logger.error(`FTP error listing files: ${err.message}`);
+    ftpClient.close();
     return;
   }
-  
+  if (!xmlFiles.length) {
+    logger.error("No XML files found. Exiting.");
+    ftpClient.close();
+    return;
+  }
+
   const downloadedFilesInfo = [];
   for (const filename of xmlFiles) {
-    const data = await fetchAndParseXml(filename);
-    if (data !== null) {
-      const info = {
-        filename,
-        data,
-        openimmo_obid: data.openimmo_obid || "",
-        delete: data.delete || false,
-        skip: false
-      };
-      downloadedFilesInfo.push(info);
-      logger.info(`File: ${filename} | OBID: ${data.openimmo_obid || ''} | DELETE flag: ${data.delete || false}`);
+    const chunks = [];
+    const collector = new Writable({ write(chunk, enc, cb) { chunks.push(chunk); cb(); } });
+    try {
+      await ftpClient.downloadTo(collector, filename);
+      const xmlString = Buffer.concat(chunks).toString('utf8');
+      const result = await xmlParser.parseStringPromise(xmlString);
+      if (!result.openimmo) {
+        logger.error(`Invalid XML format (missing <openimmo>): ${filename}`);
+        continue;
+      }
+      const data = parseOpenImmo(result.openimmo, filename);
+      if (data) {
+        downloadedFilesInfo.push({
+          filename,
+          data,
+          openimmo_obid: data.openimmo_obid || "",
+          delete: data.delete || false,
+          skip: false
+        });
+        logger.info(`File: ${filename} | OBID: ${data.openimmo_obid || ''} | DELETE flag: ${data.delete || false}`);
+      }
+    } catch (err) {
+      logger.error(`Error fetching/parsing ${filename}: ${err.message}`);
     }
   }
-  
+  ftpClient.close();
   if (!downloadedFilesInfo.length) {
     logger.error("No XML files were downloaded or parsed. Exiting.");
     return;
