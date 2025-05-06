@@ -135,7 +135,7 @@ function parseOpenImmo(root, source) {
     immobilie.anhaenge[0].anhang.slice(0,5).forEach((anhang, idx) => {
       if (anhang.daten && anhang.daten[0]) {
         const pfad = getText(anhang.daten[0], "pfad");
-        if (pfad) imageFields[`anhang_image_${idx+1}`] = pfad;
+        if (pfad) imageFields[`anhang-image-${idx+1}`] = pfad;
       }
     });
   }
@@ -319,7 +319,7 @@ async function parseXmlFile(filePath) {
         if (anhang.daten && anhang.daten[0]) {
           const pfad = getText(anhang.daten[0], "pfad");
           if (pfad) {
-            imageFields[`anhang_image_${idx+1}`] = pfad;
+            imageFields[`anhang-image-${idx+1}`] = pfad;
           }
         }
       }
@@ -753,7 +753,7 @@ async function processImageFields(data) {
   // Collect all attachment images into the multi-images field
   const multiImages = [];
   for (const [key, value] of Object.entries(data)) {
-    if (key.startsWith('anhang_image_') && value) {
+    if (key.startsWith('anhang-image-') && value) {
       multiImages.push({ url: value });
     }
   }
@@ -761,7 +761,7 @@ async function processImageFields(data) {
     // Multi-images supports multiple images
     imageFields['multi-images'] = multiImages;
     // Also populate the first attachment into the existing thumbnail field
-    imageFields['anhang_image_1'] = multiImages[0];
+    imageFields['anhang-image-1'] = multiImages[0];
   }
   return imageFields;
 }
