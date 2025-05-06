@@ -569,9 +569,10 @@ async function deleteItemWithDirectApi(itemId) {
  */
 async function deleteItems(obid) {
   try {
-    // Get all items from Webflow
-    const items = await getItemsFromWebflow();
-    logger.info(`Retrieved ${items.length} item(s) from Webflow.`);
+    // Use cached Webflow items to avoid repeated fetch calls
+    const items = cachedWebflowItems || (await getItemsFromWebflow());
+    if (!cachedWebflowItems) cachedWebflowItems = items;
+    logger.info(`Using cached ${items.length} Webflow item(s)`);
     
     // Find items with matching OBID
     const matchingItems = items.filter(item => itemMatchesObid(item, obid));
