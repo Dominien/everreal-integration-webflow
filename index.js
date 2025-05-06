@@ -754,7 +754,7 @@ async function processImageFields(data) {
   const multiImages = [];
   // Handle up to 5 attachments
   for (let i = 1; i <= 5; i++) {
-    const key = `anhang_image_${i}`;
+    const key = `anhang-image-${i}`;
     const url = data[key];
     if (url) {
       const imgObj = { url };
