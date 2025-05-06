@@ -217,9 +217,6 @@ async function deleteFileFromFtp(filename) {
   } finally { client.close(); }
 }
 
-// ... (Webflow functions and main remain unchanged) ...
-
-
 async function parseXmlFile(filePath) {
   try {
     const parser = new xml2js.Parser({ explicitArray: true });
