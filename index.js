@@ -745,27 +745,25 @@ async function processImageForWebflow(imageUrl, alt = "") {
  * @returns {Promise<Object>} Object with processed image fields
  */
 async function processImageFields(data) {
+  // Build legacy single-image fields and a consolidated multi-images array
   const imageFields = {};
-  // Preserve contact photo if provided
+  // Preserve contact photo if available
   if (data.kontaktfoto) {
     imageFields['kontaktfoto'] = { url: data.kontaktfoto };
   }
-  // Collect attachments into legacy 'anhang-image-N' fields and a 'multi-images' array
   const multiImages = [];
-  for (const [key, value] of Object.entries(data)) {
-    // data keys are like 'anhang-image-1', convert to slug 'anhang-image-1'
-    if (key.startsWith('anhang-image-') && value) {
-      const parts = key.split('_');
-      const num = parts[parts.length - 1];
-      const slug = `anhang-image-${num}`;
-      const imgObj = { url: value };
-      // Legacy single-image field
-      imageFields[slug] = imgObj;
-      // Accumulate into multi-images
+  // Handle up to 5 attachments
+  for (let i = 1; i <= 5; i++) {
+    const key = `anhang_image_${i}`;
+    const url = data[key];
+    if (url) {
+      const imgObj = { url };
+      // Legacy CMS field slugs use hyphens
+      imageFields[`anhang-image-${i}`] = imgObj;
       multiImages.push(imgObj);
     }
   }
-  if (multiImages.length > 0) {
+  if (multiImages.length) {
     imageFields['multi-images'] = multiImages;
   }
   return imageFields;
