@@ -28,8 +28,6 @@ require('dotenv').config();
 
 // XML Parser (reuse instance for performance)
 const xmlParser = new xml2js.Parser({ explicitArray: true });
-// In-memory cache of Webflow items to minimize API calls
-let cachedWebflowItems = null;
 
 // ---------------------------
 // FTP Server Credentials
@@ -585,10 +583,9 @@ async function deleteItemWithDirectApi(itemId) {
  */
 async function deleteItems(obid) {
   try {
-    // Use cached Webflow items to avoid repeated fetch calls
-    const items = cachedWebflowItems || (await getItemsFromWebflow());
-    if (!cachedWebflowItems) cachedWebflowItems = items;
-    logger.info(`Using cached ${items.length} Webflow item(s)`);
+    // Fetch items from Webflow
+    const items = await getItemsFromWebflow();
+    logger.info(`Retrieved ${items.length} item(s) from Webflow`);
     
     // Find items with matching OBID
     const matchingItems = items.filter(item => itemMatchesObid(item, obid));
@@ -749,44 +746,27 @@ async function processImageForWebflow(imageUrl, alt = "") {
  */
 async function processImageFields(data) {
   const imageFields = {};
-  
-  // Process contact photo if available
+  // Contact photo (existing CMS field)
   if (data.kontaktfoto) {
-    try {
-      const imageObj = await processImageForWebflow(
-        data.kontaktfoto, 
-        "Contact Photo"
-      );
-      if (imageObj) {
-        imageFields.kontaktfoto = imageObj;
-        logger.info(`Processed contact photo: ${imageObj.url}`);
-      }
-    } catch (err) {
-      logger.error(`Error processing contact photo: ${err.message}`);
-    }
+    imageFields['kontaktfoto'] = { url: data.kontaktfoto };
   }
+  // Multi-images attachments
+  const multiImages = [];
+  let thumbnailObj = null;
   
-  // Process attached images
+  // Aggregate attached images into multi-images array
   for (const [key, value] of Object.entries(data)) {
     if (key.startsWith("anhang_image_") && value) {
-      try {
-        const index = key.replace("anhang_image_", "");
-        const newKey = `anhang-image-${index}`;
-        const imageObj = await processImageForWebflow(
-          value, 
-          `Property Image ${index}`
-        );
-        
-        if (imageObj) {
-          imageFields[newKey] = imageObj;
-          logger.info(`Processed ${newKey}: ${imageObj.url}`);
-        }
-      } catch (err) {
-        logger.error(`Error processing ${key}: ${err.message}`);
-      }
+      const img = { url: value };
+      multiImages.push(img);
+      if (!thumbnailObj) thumbnailObj = img;
     }
   }
-  
+  if (multiImages.length) {
+    imageFields['multi-images'] = multiImages;
+    // Thumbnail from first attachment
+    imageFields['thumbnail'] = thumbnailObj;
+  }
   return imageFields;
 }
 
