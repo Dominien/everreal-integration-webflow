@@ -750,18 +750,23 @@ async function processImageFields(data) {
   if (data.kontaktfoto) {
     imageFields['kontaktfoto'] = { url: data.kontaktfoto };
   }
-  // Collect all attachment images into the multi-images field
+  // Collect attachments into legacy 'anhang-image-N' fields and a 'multi-images' array
   const multiImages = [];
   for (const [key, value] of Object.entries(data)) {
+    // data keys are like 'anhang-image-1', convert to slug 'anhang-image-1'
     if (key.startsWith('anhang-image-') && value) {
-      multiImages.push({ url: value });
+      const parts = key.split('_');
+      const num = parts[parts.length - 1];
+      const slug = `anhang-image-${num}`;
+      const imgObj = { url: value };
+      // Legacy single-image field
+      imageFields[slug] = imgObj;
+      // Accumulate into multi-images
+      multiImages.push(imgObj);
     }
   }
   if (multiImages.length > 0) {
-    // Multi-images supports multiple images
     imageFields['multi-images'] = multiImages;
-    // Also populate the first attachment into the existing thumbnail field
-    imageFields['anhang-image-1'] = multiImages[0];
   }
   return imageFields;
 }
