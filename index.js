@@ -5,6 +5,7 @@ const xml2js = require('xml2js');
 const { WebflowClient } = require('webflow-api');
 const winston = require('winston');
 const fs = require('fs');
+const path = require('path');
 
 // ---------------------------
 // Logging Configuration
@@ -27,6 +28,8 @@ require('dotenv').config();
 
 // XML Parser (reuse instance for performance)
 const xmlParser = new xml2js.Parser({ explicitArray: true });
+// In-memory cache of Webflow items to minimize API calls
+let cachedWebflowItems = null;
 
 // ---------------------------
 // FTP Server Credentials
@@ -168,6 +171,12 @@ function parseOpenImmo(root, source) {
   };
 
   logger.info(`DELETE=${deleteFlag} | OBID=${openimmoObid} | Parsed: ${source}`);
+  // Add name-for-link field (substring between '_' and '+' in filename)
+  const idx1 = source.indexOf('_');
+  const idx2 = source.indexOf('+');
+  propertyData['name-for-link'] = (idx1 !== -1 && idx2 > idx1 + 1)
+    ? source.substring(idx1 + 1, idx2)
+    : '';
   return propertyData;
 }
 
@@ -387,6 +396,13 @@ async function parseXmlFile(filePath) {
     
     logger.info(`DELETE flag: ${deleteFlag} | openimmo_obid: ${openimmoObid}`);
     logger.info(`Parsed XML: ${path.basename(filePath)}`);
+    // Add name-for-link field (substring between '_' and '+' in filename)
+    const baseName = path.basename(filePath);
+    const start = baseName.indexOf('_');
+    const plus = baseName.indexOf('+');
+    propertyData['name-for-link'] = (start !== -1 && plus > start + 1)
+      ? baseName.substring(start + 1, plus)
+      : '';
     return propertyData;
   } catch (err) {
     logger.error(`Error parsing XML ${path.basename(filePath)}: ${err.message}`);
@@ -813,7 +829,10 @@ async function importItemToWebflow(data) {
     "anzahl-schlafzimmer": String(data["anzahl-schlafzimmer"] || ""),
     "anzahl-badezimmer": String(data["anzahl-badezimmer"] || ""),
     baujahr: String(data.baujahr || ""),
+    // Identifier
     "openimmo-obid": String(data.openimmo_obid || ""),
+    // Custom field: name-for-link from filename
+    "name-for-link": data["name-for-link"] || "",
     
     // Rich text fields formatted as simple HTML
     lage: `<p>${data.lage || ""}</p>`,
