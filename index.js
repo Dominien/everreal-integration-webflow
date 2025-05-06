@@ -746,26 +746,22 @@ async function processImageForWebflow(imageUrl, alt = "") {
  */
 async function processImageFields(data) {
   const imageFields = {};
-  // Contact photo (existing CMS field)
+  // Preserve contact photo if provided
   if (data.kontaktfoto) {
     imageFields['kontaktfoto'] = { url: data.kontaktfoto };
   }
-  // Multi-images attachments
+  // Collect all attachment images into the multi-images field
   const multiImages = [];
-  let thumbnailObj = null;
-  
-  // Aggregate attached images into multi-images array
   for (const [key, value] of Object.entries(data)) {
-    if (key.startsWith("anhang_image_") && value) {
-      const img = { url: value };
-      multiImages.push(img);
-      if (!thumbnailObj) thumbnailObj = img;
+    if (key.startsWith('anhang_image_') && value) {
+      multiImages.push({ url: value });
     }
   }
-  if (multiImages.length) {
+  if (multiImages.length > 0) {
+    // Multi-images supports multiple images
     imageFields['multi-images'] = multiImages;
-    // Thumbnail from first attachment
-    imageFields['thumbnail'] = thumbnailObj;
+    // Also populate the first attachment into the existing thumbnail field
+    imageFields['anhang_image_1'] = multiImages[0];
   }
   return imageFields;
 }
