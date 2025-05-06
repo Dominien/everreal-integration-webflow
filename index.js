@@ -1,7 +1,6 @@
 // Node.js implementation of Everreal Webflow Integration
 const ftp = require('basic-ftp');
-const fs = require('fs');
-const path = require('path');
+const { Writable } = require('stream');
 const xml2js = require('xml2js');
 const { WebflowClient } = require('webflow-api');
 const winston = require('winston');
@@ -57,131 +56,169 @@ function getText(element, tag) {
   return element[tag][0].trim();
 }
 
-function extractPrefix(filename) {
-  const match = filename.match(/^((?:[^-]*-){2})/);
-  return match ? match[1] : null;
-}
-
-/**
- * Format plain text for Webflow RichText fields
- * Converts plain text to basic HTML format that Webflow can accept for RichText fields
- * @param {string} text - Plain text input
- * @returns {string} - Formatted HTML for RichText fields
- */
 function formatRichText(text) {
   if (!text) return "";
-  
-  // Convert newlines to paragraphs
   const paragraphs = text.split(/\n\n+/);
-  
-  // If empty after splitting, return empty string
   if (paragraphs.length === 0 || (paragraphs.length === 1 && paragraphs[0].trim() === "")) {
     return "";
   }
-  
-  // Format paragraphs with proper HTML
-  const formattedText = paragraphs
-    .map(p => {
-      // Handle single newlines as line breaks within paragraphs
-      const lines = p.split(/\n/);
-      if (lines.length > 1) {
-        return `<p>${lines.join("<br>")}</p>`;
+  return paragraphs.map(p => {
+    const lines = p.split(/\n/);
+    if (lines.length > 1) return `<p>${lines.join("<br>")}</p>`;
+    return `<p>${p}</p>`;
+  }).join("");
+}
+
+// Parses the <openimmo> root object into property data
+function parseOpenImmo(root, source) {
+  let deleteFlag = false;
+  if (root.aktion && root.aktion[0].$ && root.aktion[0].$.aktionart === "DELETE") {
+    deleteFlag = true;
+  }
+
+  const anbieter = root.anbieter ? root.anbieter[0] : null;
+  const immobilie = anbieter && anbieter.immobilie ? anbieter.immobilie[0] : null;
+  if (!immobilie) {
+    logger.error(`Invalid XML format (no <immobilie>): ${source}`);
+    return null;
+  }
+  const verw = immobilie.verwaltung_techn ? immobilie.verwaltung_techn[0] : null;
+  if (!deleteFlag && verw && verw.aktion && verw.aktion[0].$ && verw.aktion[0].$.aktionart === "DELETE") {
+    deleteFlag = true;
+  }
+
+  // Extract fields
+  const firma = anbieter ? getText(anbieter, "firma") : "";
+  const freitexte = immobilie.freitexte ? immobilie.freitexte[0] : null;
+  const objekttitel = freitexte ? getText(freitexte, "objekttitel") : "";
+  const lage = freitexte ? getText(freitexte, "lage") : "";
+  const objektbeschreibung = freitexte ? getText(freitexte, "objektbeschreibung") : "";
+  const ausgestattBeschr = freitexte ? getText(freitexte, "ausstatt_beschr") : "";
+  const sonstigeAngaben = freitexte ? getText(freitexte, "sonstige_angaben") : "";
+
+  const geo = immobilie.geo ? immobilie.geo[0] : null;
+  const plz = geo ? getText(geo, "plz") : "";
+  const ort = geo ? getText(geo, "ort") : "";
+  const strasse = geo ? getText(geo, "strasse") : "";
+  const hausnummer = geo ? getText(geo, "hausnummer") : "";
+
+  const preise = immobilie.preise ? immobilie.preise[0] : null;
+  const kaltmiete = preise ? getText(preise, "kaltmiete") : "";
+  const warmmiete = preise ? getText(preise, "warmmiete") : "";
+  const nebenkosten = preise ? getText(preise, "nebenkosten") : "";
+  const kaution = preise ? getText(preise, "kaution") : "";
+
+  const flaech = immobilie.flaechen ? immobilie.flaechen[0] : null;
+  const wohnflaeche = flaech ? getText(flaech, "wohnflaeche") : "";
+  const anzahlZimmer = flaech ? getText(flaech, "anzahl_zimmer") : "";
+  const anzahlSchlafzimmer = flaech ? getText(flaech, "anzahl_schlafzimmer") : "";
+  const anzahlBadezimmer = flaech ? getText(flaech, "anzahl_badezimmer") : "";
+
+  const zustand = immobilie.zustand_angaben ? immobilie.zustand_angaben[0] : null;
+  const baujahr = zustand ? getText(zustand, "baujahr") : "";
+
+  let kontaktfoto = "";
+  if (immobilie.kontaktperson && immobilie.kontaktperson[0]) {
+    const kp = immobilie.kontaktperson[0];
+    if (kp.foto && kp.foto[0] && kp.foto[0].daten && kp.foto[0].daten[0]) {
+      kontaktfoto = getText(kp.foto[0].daten[0], "pfad");
+    }
+  }
+
+  const imageFields = {};
+  if (immobilie.anhaenge && immobilie.anhaenge[0].anhang) {
+    immobilie.anhaenge[0].anhang.slice(0,5).forEach((anhang, idx) => {
+      if (anhang.daten && anhang.daten[0]) {
+        const pfad = getText(anhang.daten[0], "pfad");
+        if (pfad) imageFields[`anhang_image_${idx+1}`] = pfad;
       }
-      return `<p>${p}</p>`;
-    })
-    .join("");
-    
-  return formattedText;
+    });
+  }
+
+  let openimmoObid = getText(verw, "openimmo_obid") || getText(verw, "objektnr_extern");
+  if (!openimmoObid) openimmoObid = immobilie.objektnr_intern ? getText(immobilie, "objektnr_intern") : "";
+
+  let uniqueSlug = deleteFlag
+    ? slugify(`${strasse} ${hausnummer}`.trim())
+    : slugify(`${objekttitel}-${openimmoObid}`);
+
+  const nameToUse = deleteFlag
+    ? `${strasse} ${hausnummer}`.trim()
+    : (objekttitel || `Immobilie ${openimmoObid || 'Unbekannt'}`);
+
+  const propertyData = {
+    name: nameToUse,
+    slug: uniqueSlug || slugify(nameToUse),
+    firma, objekttitel, lage, objektbeschreibung,
+    "ausstatt-beschr": ausgestattBeschr,
+    "sonstige-angaben": sonstigeAngaben,
+    plz, ort, strasse, hausnummer,
+    kaltmiete, warmmiete, nebenkosten, kaution,
+    wohnflaeche, "anzahl-zimmer": anzahlZimmer,
+    "anzahl-schlafzimmer": anzahlSchlafzimmer,
+    "anzahl-badezimmer": anzahlBadezimmer,
+    baujahr, kontaktfoto,
+    "openimmo_obid": openimmoObid,
+    delete: deleteFlag,
+    ...imageFields
+  };
+
+  logger.info(`DELETE=${deleteFlag} | OBID=${openimmoObid} | Parsed: ${source}`);
+  return propertyData;
 }
 
 // ---------------------------
 // FTP & XML Functions
 // ---------------------------
 async function listXmlFiles() {
-  const client = new ftp.Client();
-  client.ftp.verbose = false;
-  const xmlFiles = [];
-  
+  const client = new ftp.Client(); client.ftp.verbose = false;
   try {
-    await client.access({
-      host: FTP_HOST,
-      port: FTP_PORT,
-      user: FTP_USER,
-      password: FTP_PASSWORD,
-      secure: false
-    });
-    
+    await client.access({ host: FTP_HOST, port: FTP_PORT, user: FTP_USER, password: FTP_PASSWORD, secure: false });
     await client.cd(REMOTE_FOLDER);
-    const files = await client.list();
-    
-    for (const file of files) {
-      if (file.name.toLowerCase().endsWith('.xml')) {
-        xmlFiles.push(file.name);
-      }
-    }
-    
-    logger.info(`Found ${xmlFiles.length} XML file(s).`);
+    return (await client.list())
+      .filter(f => f.name.toLowerCase().endsWith('.xml'))
+      .map(f => f.name);
   } catch (err) {
-    logger.error(`FTP connection error: ${err.message}`);
-  } finally {
-    client.close();
-  }
-  
-  return xmlFiles;
+    logger.error(`FTP list error: ${err.message}`);
+    return [];
+  } finally { client.close(); }
 }
 
-async function downloadXmlFile(filename, localDir = "xml_files") {
-  const client = new ftp.Client();
-  client.ftp.verbose = false;
-  const localPath = path.join(localDir, filename);
-  
+async function fetchAndParseXml(filename) {
+  const client = new ftp.Client(); client.ftp.verbose = false;
   try {
-    if (!fs.existsSync(localDir)) {
-      fs.mkdirSync(localDir, { recursive: true });
-    }
-    
-    await client.access({
-      host: FTP_HOST,
-      port: FTP_PORT,
-      user: FTP_USER,
-      password: FTP_PASSWORD,
-      secure: false
-    });
-    
+    await client.access({ host: FTP_HOST, port: FTP_PORT, user: FTP_USER, password: FTP_PASSWORD, secure: false });
     await client.cd(REMOTE_FOLDER);
-    await client.downloadTo(localPath, filename);
-    logger.info(`Downloaded: ${filename}`);
-    return localPath;
+    const chunks = [];
+    const collector = new Writable({
+      write(chunk, enc, cb) { chunks.push(chunk); cb(); }
+    });
+    await client.downloadTo(collector, filename);
+    const xmlString = Buffer.concat(chunks).toString('utf8');
+    const parser = new xml2js.Parser({ explicitArray: true });
+    const result = await parser.parseStringPromise(xmlString);
+    if (!result.openimmo) throw new Error('Missing <openimmo> root');
+    return parseOpenImmo(result.openimmo, filename);
   } catch (err) {
-    logger.error(`Error downloading ${filename}: ${err.message}`);
+    logger.error(`Error fetching/parsing ${filename}: ${err.message}`);
     return null;
-  } finally {
-    client.close();
-  }
+  } finally { client.close(); }
 }
 
 async function deleteFileFromFtp(filename) {
-  const client = new ftp.Client();
-  client.ftp.verbose = false;
-  
+  const client = new ftp.Client(); client.ftp.verbose = false;
   try {
-    await client.access({
-      host: FTP_HOST,
-      port: FTP_PORT,
-      user: FTP_USER,
-      password: FTP_PASSWORD,
-      secure: false
-    });
-    
+    await client.access({ host: FTP_HOST, port: FTP_PORT, user: FTP_USER, password: FTP_PASSWORD, secure: false });
     await client.cd(REMOTE_FOLDER);
     await client.remove(filename);
     logger.info(`Deleted FTP file: ${filename}`);
   } catch (err) {
-    logger.error(`Error deleting FTP file ${filename}: ${err.message}`);
-  } finally {
-    client.close();
-  }
+    logger.error(`FTP delete error: ${err.message}`);
+  } finally { client.close(); }
 }
+
+// ... (Webflow functions and main remain unchanged) ...
+
 
 async function parseXmlFile(filePath) {
   try {
