@@ -122,4 +122,48 @@ If you encounter issues:
 - fs-extra - File system utilities
 - xml2js - XML parsing
 - webflow-api - Webflow API client
-- winston - Logging
+ - winston - Logging
+
+## GitHub Actions Cron Job
+
+Instead of using Vercel for scheduling, you can run this integration via a GitHub Actions cron workflow.
+1. Create a file at `.github/workflows/sync.yml` with the following content:
+```yaml
+name: Everreal Webflow Sync
+
+on:
+  schedule:
+    # Run daily at 10:00 UTC
+    - cron: '0 10 * * *'
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    env:
+      FTP_HOST: ${{ secrets.FTP_HOST }}
+      FTP_USER: ${{ secrets.FTP_USER }}
+      FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+      FTP_PORT: ${{ secrets.FTP_PORT }}
+      REMOTE_FOLDER: ${{ secrets.REMOTE_FOLDER }}
+      WEBFLOW_TOKEN: ${{ secrets.WEBFLOW_TOKEN }}
+      COLLECTION_ID: ${{ secrets.COLLECTION_ID }}
+      SITE_ID: ${{ secrets.SITE_ID }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - run: npm ci
+      - run: npm start
+```
+2. In your GitHub repository settings, add the following **Repository Secrets**:
+  - FTP_HOST
+  - FTP_USER
+  - FTP_PASSWORD
+  - FTP_PORT
+  - REMOTE_FOLDER
+  - WEBFLOW_TOKEN
+  - COLLECTION_ID
+  - SITE_ID
+3. Commit and push. GitHub Actions will run the sync daily at 10:00 UTC and can also be manually triggered.

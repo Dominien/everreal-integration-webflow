@@ -1,0 +1,35 @@
+name: Everreal Webflow Sync
+
+on:
+  schedule:
+    # Run daily at 10:00 UTC
+    - cron: '0 10 * * *'
+  workflow_dispatch:
+
+jobs:
+  sync:
+    name: Sync Everreal XML to Webflow CMS
+    runs-on: ubuntu-latest
+    env:
+      FTP_HOST: ${{ secrets.FTP_HOST }}
+      FTP_USER: ${{ secrets.FTP_USER }}
+      FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+      FTP_PORT: ${{ secrets.FTP_PORT }}
+      REMOTE_FOLDER: ${{ secrets.REMOTE_FOLDER }}
+      WEBFLOW_TOKEN: ${{ secrets.WEBFLOW_TOKEN }}
+      COLLECTION_ID: ${{ secrets.COLLECTION_ID }}
+      SITE_ID: ${{ secrets.SITE_ID }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run integration
+        run: npm start
