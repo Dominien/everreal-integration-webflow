@@ -1,96 +1,118 @@
 (function(){
-  // build & wire up your lightbox gallery
-  function initLightboxGallery() {
-    const mainImg = document.querySelector('#w-lightbox-view .w-lightbox-img');
-    if (!mainImg) return;                            // not in DOM yet?
-    
-    const prevBtn = document.querySelector('.w-lightbox-left');
-    const nextBtn = document.querySelector('.w-lightbox-right');
-    const strip   = document.querySelector('.w-lightbox-strip');
-    
-    // only init once
-    if (strip.dataset.galleryInit) return;
-    strip.dataset.galleryInit = 'true';
-    
-    // grab your grid thumbnails
-    const thumbs = Array.from(
-      document.querySelectorAll('.grid_images .image-down_list')
-    );
-    
-    // build a clean array of URLs (skip placeholder.svg)
-    const gallery = thumbs
-      .map(img => img.src)
-      .filter(src => src && !src.includes('placeholder'));
-    
-    // figure out which one is showing
-    let current = gallery.indexOf(mainImg.src);
-    if (current < 0) current = 0;
-    
-    // populate the strip
-    gallery.forEach((src, i) => {
-      const wrapper = document.createElement('div');
-      wrapper.className = 'w-lightbox-strip-child';
-      wrapper.setAttribute('role', 'tab');
-      wrapper.dataset.index = i;
-      
-      const thumb = document.createElement('img');
-      thumb.className = 'w-lightbox-thumb';
-      thumb.src = src;
-      thumb.alt = `Image ${i+1}`;
-      
-      thumb.addEventListener('click', () => {
-        current = i;
-        refresh();
-      });
-      
-      wrapper.appendChild(thumb);
-      strip.appendChild(wrapper);
-    });
-    
-    function refresh() {
-      // swap the big image
-      mainImg.src = gallery[current];
-      
-      // highlight the active thumb
-      strip
-        .querySelectorAll('.w-lightbox-strip-child')
-        .forEach((el, i) => el.classList.toggle('w-lightbox-active', i === current));
-      
-      // toggle prev/next
-      prevBtn.classList.toggle('w-lightbox-inactive', current === 0);
-      nextBtn.classList.toggle('w-lightbox-inactive', current === gallery.length - 1);
-    }
-    
-    // wire buttons
-    prevBtn.addEventListener('click', () => {
-      if (current > 0) {
-        current--;
-        refresh();
-      }
-    });
-    nextBtn.addEventListener('click', () => {
-      if (current < gallery.length - 1) {
-        current++;
-        refresh();
-      }
-    });
-    
-    // kick it off
-    refresh();
-  }
+    console.log('🔧 Lightbox debug: script loaded');
   
-  // watch for the lightbox backdrop to be inserted
-  const observer = new MutationObserver(muts => {
-    for (let m of muts) {
-      for (let node of m.addedNodes) {
-        if (
-          node.nodeType === 1 &&
-          node.classList.contains('w-lightbox-backdrop')
-        ) {
-          initLightboxGallery();
-        }
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('🔧 Lightbox debug: DOMContentLoaded');
+      initLightboxGallery();
+  
+      // Watch for any later lightbox injections
+      const observer = new MutationObserver(muts => {
+        muts.forEach(m => {
+          m.addedNodes.forEach(node => {
+            if (
+              node.nodeType === 1 &&
+              node.classList.contains('w-lightbox-backdrop')
+            ) {
+              console.log('🔧 Lightbox debug: .w-lightbox-backdrop detected');
+              initLightboxGallery();
+            }
+          });
+        });
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+    });
+  
+    function initLightboxGallery() {
+      console.log('🔧 Lightbox debug: initLightboxGallery called');
+  
+      const mainImg = document.querySelector('#w-lightbox-view .w-lightbox-img');
+      const prevBtn = document.querySelector('.w-lightbox-left');
+      const nextBtn = document.querySelector('.w-lightbox-right');
+      const strip   = document.querySelector('.w-lightbox-strip');
+  
+      console.log('🔧 Lightbox debug:', { mainImg, prevBtn, nextBtn, strip });
+  
+      if (!mainImg || !prevBtn || !nextBtn || !strip) {
+        console.log('🔧 Lightbox debug: one or more elements missing, aborting');
+        return;
       }
+  
+      if (strip.children.length) {
+        console.log('🔧 Lightbox debug: strip already initialized, skipping');
+        return;
+      }
+  
+      const thumbs = Array.from(
+        document.querySelectorAll('.grid_images .image-down_list')
+      );
+      console.log('🔧 Lightbox debug: thumbs found:', thumbs.length);
+  
+      const gallery = thumbs
+        .map(img => img.src)
+        .filter(src => src && !src.includes('placeholder'));
+      console.log('🔧 Lightbox debug: gallery URLs:', gallery);
+  
+      let current = gallery.indexOf(mainImg.src);
+      if (current < 0) current = 0;
+      console.log('🔧 Lightbox debug: starting index:', current);
+  
+      gallery.forEach((src, i) => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'w-lightbox-strip-child';
+        wrapper.setAttribute('role', 'tab');
+  
+        const thumb = document.createElement('img');
+        thumb.className = 'w-lightbox-thumb';
+        thumb.src = src;
+        thumb.alt = `Image ${i+1}`;
+  
+        thumb.addEventListener('click', () => {
+          console.log(`🔧 Lightbox debug: thumb ${i} clicked`);
+          current = i;
+          refresh();
+        });
+  
+        wrapper.appendChild(thumb);
+        strip.appendChild(wrapper);
+      });
+  
+      function refresh() {
+        console.log('🔧 Lightbox debug: refresh → current =', current);
+        mainImg.src = gallery[current];
+  
+        strip
+          .querySelectorAll('.w-lightbox-strip-child')
+          .forEach((el, i) => {
+            const active = i === current;
+            el.classList.toggle('w-lightbox-active', active);
+            if (active) console.log(`🔧 Lightbox debug: thumb ${i} set active`);
+          });
+  
+        const atStart = current === 0;
+        const atEnd   = current === gallery.length - 1;
+        prevBtn.classList.toggle('w-lightbox-inactive', atStart);
+        nextBtn.classList.toggle('w-lightbox-inactive', atEnd);
+        console.log(`🔧 Lightbox debug: prevDisabled=${atStart}, nextDisabled=${atEnd}`);
+      }
+  
+      prevBtn.addEventListener('click', () => {
+        console.log('🔧 Lightbox debug: prevBtn clicked (current=', current,')');
+        if (current > 0) {
+          current--;
+          refresh();
+        }
+      });
+  
+      nextBtn.addEventListener('click', () => {
+        console.log('🔧 Lightbox debug: nextBtn clicked (current=', current,')');
+        if (current < gallery.length - 1) {
+          current++;
+          refresh();
+        }
+      });
+  
+      console.log('🔧 Lightbox debug: initialization complete, doing initial refresh');
+      refresh();
     }
-  });
-  observer.observe(document.body, { childList: true });
-})();
+  })();
+  
