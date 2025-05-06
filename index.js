@@ -4,6 +4,7 @@ const { Writable } = require('stream');
 const xml2js = require('xml2js');
 const { WebflowClient } = require('webflow-api');
 const winston = require('winston');
+const fs = require('fs');
 
 // ---------------------------
 // Logging Configuration
@@ -1119,23 +1120,19 @@ async function main() {
     return;
   }
   
-  const downloadedFilesInfo = []; // List of objects: filename, path, data, OBID, delete, skip
+  const downloadedFilesInfo = [];
   for (const filename of xmlFiles) {
-    const path = await downloadXmlFile(filename);
-    if (path) {
-      const data = await parseXmlFile(path);
-      if (data !== null) {
-        const fileInfo = {
-          filename: filename,
-          path: path,
-          data: data,
-          openimmo_obid: data.openimmo_obid || "",
-          delete: data.delete || false,
-          skip: false
-        };
-        downloadedFilesInfo.push(fileInfo);
-        logger.info(`File: ${filename} | OBID: ${data.openimmo_obid || ''} | DELETE flag: ${data.delete || false}`);
-      }
+    const data = await fetchAndParseXml(filename);
+    if (data !== null) {
+      const info = {
+        filename,
+        data,
+        openimmo_obid: data.openimmo_obid || "",
+        delete: data.delete || false,
+        skip: false
+      };
+      downloadedFilesInfo.push(info);
+      logger.info(`File: ${filename} | OBID: ${data.openimmo_obid || ''} | DELETE flag: ${data.delete || false}`);
     }
   }
   
