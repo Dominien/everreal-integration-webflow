@@ -139,6 +139,16 @@ function parseOpenImmo(root, source) {
       }
     });
   }
+  // Extract Matterport link from attachments
+  let matterportLink = "";
+  if (immobilie.anhaenge && immobilie.anhaenge[0].anhang) {
+    immobilie.anhaenge[0].anhang.forEach(anhang => {
+      if (anhang.$ && anhang.$.gruppe === "LINKS" && anhang.daten && anhang.daten[0]) {
+        const pfad = getText(anhang.daten[0], "pfad");
+        if (pfad) matterportLink = pfad;
+      }
+    });
+  }
 
   let openimmoObid = getText(verw, "openimmo_obid") || getText(verw, "objektnr_extern");
   if (!openimmoObid) openimmoObid = immobilie.objektnr_intern ? getText(immobilie, "objektnr_intern") : "";
@@ -165,6 +175,7 @@ function parseOpenImmo(root, source) {
     baujahr, kontaktfoto,
     "openimmo_obid": openimmoObid,
     delete: deleteFlag,
+    matterportlink: matterportLink,
     ...imageFields
   };
 
@@ -238,6 +249,16 @@ async function parseXmlFile(filePath) {
     if (!result.openimmo) {
       logger.error(`Invalid XML format: missing openimmo root element`);
       return null;
+    }
+    // Extract Matterport link from attachments
+    let matterportLink = "";
+    if (immobilie && immobilie.anhaenge && immobilie.anhaenge[0] && immobilie.anhaenge[0].anhang) {
+      immobilie.anhaenge[0].anhang.forEach(anhang => {
+        if (anhang.$ && anhang.$.gruppe === "LINKS" && anhang.daten && anhang.daten[0]) {
+          const pfad = getText(anhang.daten[0], "pfad");
+          if (pfad) matterportLink = pfad;
+        }
+      });
     }
     
     const root = result.openimmo;
@@ -380,7 +401,8 @@ async function parseXmlFile(filePath) {
       baujahr: baujahr,
       kontaktfoto: kontaktfoto,
       openimmo_obid: openimmoObid, // Internal key
-      delete: deleteFlag
+      delete: deleteFlag,
+      matterportlink: matterportLink
     };
     
     // Add image fields
@@ -812,6 +834,7 @@ async function importItemToWebflow(data) {
     "openimmo-obid": String(data.openimmo_obid || ""),
     // Custom field: name-for-link from filename
     "name-for-link": data["name-for-link"] || "",
+    matterportlink: data.matterportlink || "",
     
     // Rich text fields formatted as simple HTML
     lage: `<p>${data.lage || ""}</p>`,
